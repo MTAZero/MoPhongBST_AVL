@@ -131,16 +131,58 @@ namespace MoPhongAVL_BST.Pointer
             List<Graph> ans = Search(a);
 
             if (!isFound(Root, a)) return ans;
-            realDelete(a);
+            realDelete(Root, a);
             Graph curGr = display();
             ans.Add(curGr);
 
             return ans;
         }
 
-        private void realDelete(Student a)
+        private void realDelete(Node root, Student a)
         {
-           
+            if (root == null) return;
+            if (root.Info.isSame(a, Type))
+            {
+                if (root.LeftChild == null && root.RightChild == null)
+                {
+                    // Nếu nút này là lá
+                    Node Parent = root.Parent;
+
+                    if (Parent.LeftChild == root)
+                        Parent.LeftChild = null;
+                    else
+                        Parent.RightChild = null;
+
+                    return;
+                }
+
+                if (root.LeftChild == null || root.RightChild == null)
+                {
+                    // là Node có 1 con
+
+                    Node child, Parent;
+                    if (root.LeftChild == null)
+                        child = root.RightChild;
+                    else
+                        child = root.LeftChild;
+                    Parent = root.Parent;
+
+                    if (Parent.LeftChild == root)
+                        Parent.LeftChild = child;
+                    else
+                        Parent.RightChild = child;
+                    return;
+                }
+
+                /// còn trường hợp code có 2 con
+               
+            }
+
+            if (root.Info.Compare(a, Type))
+                realDelete(root.LeftChild, a);
+            else
+                realDelete(root.RightChild, a);
+                
         }
         #endregion
 
