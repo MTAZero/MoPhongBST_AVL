@@ -53,9 +53,13 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Student.cs" />
     <Compile Include="Object\Circle.cs" />
+    <Compile Include="Object\Graph.cs" />
     <Compile Include="Object\Helper.cs" />
     <Compile Include="Object\Line.cs" />
+    <Compile Include="Pointer\AVL_Tree.cs" />
+    <Compile Include="Pointer\BST_Tree.cs" />
     <Compile Include="Pointer\Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
