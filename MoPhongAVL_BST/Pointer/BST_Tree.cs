@@ -15,23 +15,26 @@ namespace MoPhongAVL_BST.Pointer
         public int MaxWidth { get; set; }
 
         #region Các hàm khởi tạo
-        BST_Tree()
+        public BST_Tree()
+        {
+            Type = 2;
+            MaxWidth = 1100;
+        }
+
+        public BST_Tree(List<Student> list)
         {
 
         }
 
-        BST_Tree(List<Student> list)
-        {
-
-        }
-
-        BST_Tree(BST_Tree a, int newType)
+        public BST_Tree(BST_Tree a, int newType)
         {
 
         }
         #endregion
 
         #region Các thao tác với dữ liệu thêm, xóa, sửa
+
+        #region Insert
         public List<Graph> Insert(Student a)
         {
             Node z = new Node();
@@ -45,42 +48,259 @@ namespace MoPhongAVL_BST.Pointer
         public List<Graph> Insert(Node a)
         {
             List<Graph> ans = new List<Graph>();
-
-            Node p = this.Root;
-
-            return new List<Graph>();
+            return getInsert(Root, a);
         }
 
+        private List<Graph> getInsert(Node node, Node addNode)
+        {
+            
+
+            Graph curGraph = new Graph();
+            List<Graph> ans = new List<Graph>();
+
+            if (node == null)
+            {
+                Root = addNode;
+                Graph afterAdd = display();
+                foreach (var item in afterAdd.listCircle)
+                    if (item.Text == getText(addNode))
+                        item.Color = System.Drawing.Color.Blue;
+                ans.Add(afterAdd);
+                return ans;
+            }
+
+            // Lấy ra đồ thị cho điểm hiện tại
+            curGraph = display();
+            string curText = getText(node);
+            foreach (var item in curGraph.listCircle) if (item.Text == curText) item.Color = System.Drawing.Color.Red;
+
+            ans.Add(curGraph);
+
+            if (addNode.Info.Compare(node.Info, Type))
+            {
+                /// Node nằm bên phải
+                if (node.RightChild == null)
+                {
+                    // thêm nút con
+                    addNode.Parent = node;
+                    node.RightChild = addNode;
+                    Graph afterAdd = display();
+                    foreach(var item in afterAdd.listCircle)
+                        if (item.Text == getText(addNode))
+                            item.Color = System.Drawing.Color.Blue;
+                    ans.Add(afterAdd);
+                }
+                else
+                {
+                    // Duyệt sang cây bên phải
+                    Line line = getLine(curGraph, curText, getText(node.RightChild));
+                    line.Color = System.Drawing.Color.Orange;
+                    ans.AddRange(getInsert(node.RightChild, addNode));
+                }
+            }
+            else
+            {
+                /// Node nằm bên trái
+                if (node.LeftChild == null)
+                {
+                    // thêm nút con
+                    addNode.Parent = node;
+                    node.LeftChild = addNode;
+                    Graph afterAdd = display();
+                    foreach (var item in afterAdd.listCircle)
+                        if (item.Text == getText(addNode))
+                            item.Color = System.Drawing.Color.Blue;
+                    ans.Add(afterAdd);
+                }
+                else
+                {
+                    // Duyệt sang cây bên phải
+                    Line line = getLine(curGraph, curText, getText(node.LeftChild));
+                    line.Color = System.Drawing.Color.Orange;
+                    ans.AddRange(getInsert(node.LeftChild, addNode));
+                }
+            }
+
+            return ans;
+        }
+        #endregion
+
+        #region Delete
         public List<Graph> Delete(Student a)
         {
-            return new List<Graph>();
+            List<Graph> ans = Search(a);
+
+            if (!isFound(Root, a)) return ans;
+            realDelete(a);
+            Graph curGr = display();
+            ans.Add(curGr);
+
+            return ans;
         }
 
+        private void realDelete(Student a)
+        {
+           
+        }
+        #endregion
+
+        #region Search
         public List<Graph> Search(Student a)
         {
-            return new List<Graph>();
+            return getSearch(Root, a);
         }
 
+        private List<Graph> getSearch(Node a, Student searchStudent)
+        {
+            List<Graph> ans = new List<Graph>();
+            Graph curGraph = display();
+
+            if (a == null) return ans;
+
+            foreach (var item in curGraph.listCircle) if (item.Text == getText(a)) item.Color = System.Drawing.Color.Red;
+            ans.Add(curGraph);
+
+            if (a.Info.isSame(searchStudent, Type))
+            {
+                Graph foundGraph = display();
+                foreach (var item in curGraph.listCircle)
+                    if (item.Text == getText(a))
+                        item.Color = System.Drawing.Color.Blue;               
+                return ans;
+            }
+            
+            if (a.LeftChild != null && searchStudent.Compare(a.Info, Type))
+            {
+                List<Graph> z = getSearch(a.LeftChild, searchStudent);
+                ans.AddRange(z);
+                return ans;
+            }
+
+            if (a.RightChild != null && !searchStudent.Compare(a.Info, Type))
+            {
+                List<Graph> z = getSearch(a.RightChild, searchStudent);
+                ans.AddRange(z);
+                return ans;
+            }
+
+            return ans;
+        }
+
+        private bool isFound(Node a, Student searchStudent)
+        {
+            if (a == null) return false;
+
+            if (a.Info.isSame(searchStudent, Type)) return true;
+            if (a.Info.Compare(searchStudent, Type)) return isFound(a.LeftChild, searchStudent);
+
+            return isFound(a.RightChild, searchStudent);
+        } 
+        #endregion
+
+        #region Update
         public List<Graph> Update(Student a)
         {
             return new List<Graph>();
         }
         #endregion
 
+        #endregion
+
         #region Các thao tác duyệt cây
         public List<Graph> LNR()
         {
-            return new List<Graph>();
+            return getLNR(Root);
+        }
+
+        private List<Graph> getLNR(Node node)
+        {
+            List<Graph> ans = new List<Graph>();
+
+            if (node == null) return ans;
+
+            if (node.LeftChild != null)
+            {
+                List<Graph> leftGr = getLNR(node.LeftChild);
+                ans.AddRange(leftGr);
+            }
+
+            Graph curGraph = display();
+            foreach (var item in curGraph.listCircle)
+                if (item.Text == getText(node))
+                    item.Color = System.Drawing.Color.Red;
+            ans.Add(curGraph);
+
+            if (node.RightChild != null)
+            {
+                List<Graph> rightGr = getLNR(node.RightChild);
+                ans.AddRange(rightGr);
+            }
+
+            return ans;
         }
 
         public List<Graph> LRN()
         {
-            return new List<Graph>();
+            return getLNR(Root);
+        }
+
+        private List<Graph> LRN(Node node)
+        {
+            List<Graph> ans = new List<Graph>();
+
+            if (node == null) return ans;
+
+            if (node.LeftChild != null)
+            {
+                List<Graph> leftGr = getLNR(node.LeftChild);
+                ans.AddRange(leftGr);
+            }
+
+            if (node.RightChild != null)
+            {
+                List<Graph> rightGr = getLNR(node.RightChild);
+                ans.AddRange(rightGr);
+            }
+
+            Graph curGraph = display();
+            foreach (var item in curGraph.listCircle)
+                if (item.Text == getText(node))
+                    item.Color = System.Drawing.Color.Red;
+            ans.Add(curGraph);
+
+            return ans;
         }
 
         public List<Graph> NLR()
         {
-            return new List<Graph>();
+            return getNLR(Root);
+        }
+
+        private List<Graph> getNLR(Node node)
+        {
+            List<Graph> ans = new List<Graph>();
+
+            if (node == null) return ans;
+
+            Graph curGraph = display();
+            foreach (var item in curGraph.listCircle)
+                if (item.Text == getText(node))
+                    item.Color = System.Drawing.Color.Red;
+            ans.Add(curGraph);
+
+            if (node.LeftChild != null)
+            {
+                List<Graph> leftGr = getLNR(node.LeftChild);
+                ans.AddRange(leftGr);
+            }            
+
+            if (node.RightChild != null)
+            {
+                List<Graph> rightGr = getLNR(node.RightChild);
+                ans.AddRange(rightGr);
+            }
+
+            return ans;
         }
         #endregion
 
@@ -89,7 +309,7 @@ namespace MoPhongAVL_BST.Pointer
         {
             if (this.MaxWidth == 0) this.MaxWidth = 1100;
 
-            return getGraph(Root, 30, 30, MaxWidth);
+            return getGraph(Root, 50, 50, MaxWidth);
         }
 
         private Graph getGraph(Node a, int Y, int miX, int maX)
@@ -104,7 +324,7 @@ namespace MoPhongAVL_BST.Pointer
                 new Circle()
                 {
                     Text = getText(a),
-                    r = 15,
+                    r = 30,
                     y = Y,
                     x = (miX + maX) / 2,
                     fontSize = 11,
@@ -115,7 +335,6 @@ namespace MoPhongAVL_BST.Pointer
 
             Graph ans = new Graph();
             int mid = (miX + maX) / 2;
-            if (a.LeftChild == null) mid = miX; else mid = maX;
 
             if (a.LeftChild != null)
             {
@@ -123,7 +342,7 @@ namespace MoPhongAVL_BST.Pointer
                 ans.listCircle.AddRange(z.listCircle);
                 ans.listLine.AddRange(z.listLine);
 
-                Circle temp = new Circle() { y = Y + 100, x = (miX + mid) / 2, r = 15 };
+                Circle temp = new Circle() { y = Y + 100, x = (miX + mid) / 2, r = 30 };
                 Line line = Helper.Connect(currentNode, temp);
 
                 ans.listLine.Add(line);
@@ -139,7 +358,7 @@ namespace MoPhongAVL_BST.Pointer
                 ans.listCircle.AddRange(z.listCircle);
                 ans.listLine.AddRange(z.listLine);
 
-                Circle temp = new Circle() { y = Y + 100, x = (maX + mid) / 2, r = 15 };
+                Circle temp = new Circle() { y = Y + 100, x = (maX + mid) / 2, r = 30 };
                 Line line = Helper.Connect(currentNode, temp);
                 ans.listLine.Add(line);
             }
@@ -177,6 +396,26 @@ namespace MoPhongAVL_BST.Pointer
             if (Type == 4) return a.Info.Score.ToString();
             if (Type == 5) return a.Info.Count.ToString();
             return "";
+        }
+
+        private Line getLine(Graph a, string ParentText, string ChildText)
+        {
+            Circle parent = new Circle();
+            Circle child = new Circle();
+
+            foreach(var item in a.listCircle)
+            {
+                if (item.Text == ParentText) parent = item;
+                if (item.Text == ChildText) child = item;
+            }
+
+            Line ans = Helper.Connect(parent, child);
+
+            foreach (var item in a.listLine)
+                if (item.x1 == ans.x1 && item.x2 == ans.x2 && item.y1 == ans.y1 && item.y2 == ans.y2)
+                    return item;
+
+            return new Line();
         }
         #endregion
 

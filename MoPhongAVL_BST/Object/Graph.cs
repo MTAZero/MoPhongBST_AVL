@@ -12,6 +12,12 @@ namespace MoPhongAVL_BST.Object
         public List<Circle> listCircle { get; set; }
         public List<Line> listLine { get; set; }
 
+        public Graph()
+        {
+            listCircle = new List<Circle>();
+            listLine = new List<Line>();
+        }
+
         public void Draw(PaintEventArgs e)
         {
             foreach (var circle in listCircle) circle.Draw(e);
