@@ -28,16 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txt1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // txt1
-            // 
-            this.txt1.Location = new System.Drawing.Point(3, 2);
-            this.txt1.Multiline = true;
-            this.txt1.Name = "txt1";
-            this.txt1.Size = new System.Drawing.Size(60, 34);
-            this.txt1.TabIndex = 0;
             // 
             // Form1
             // 
@@ -45,19 +36,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(629, 498);
-            this.Controls.Add(this.txt1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txt1;
     }
 }
 

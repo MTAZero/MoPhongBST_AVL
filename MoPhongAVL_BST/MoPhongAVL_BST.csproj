@@ -54,6 +54,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Object\Circle.cs" />
+    <Compile Include="Object\Helper.cs" />
     <Compile Include="Object\Line.cs" />
     <Compile Include="Pointer\Node.cs" />
     <Compile Include="Program.cs" />
