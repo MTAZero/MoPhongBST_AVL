@@ -59,6 +59,7 @@
             this.btnDong.TabIndex = 3;
             this.btnDong.Text = "Đóng";
             this.btnDong.UseVisualStyleBackColor = true;
+            this.btnDong.Click += new System.EventHandler(this.btnDong_Click);
             // 
             // btnTimKiem
             // 
@@ -68,6 +69,7 @@
             this.btnTimKiem.TabIndex = 2;
             this.btnTimKiem.Text = "Tìm kiếm";
             this.btnTimKiem.UseVisualStyleBackColor = true;
+            this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
             // txtTuKhoa
             // 
@@ -92,6 +94,7 @@
             this.ClientSize = new System.Drawing.Size(499, 113);
             this.Controls.Add(this.panel1);
             this.Name = "FrmTimKiem";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tìm kiếm";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

@@ -100,7 +100,14 @@ namespace MoPhongAVL_BST.GUI
 
         private void btnTimNode_Click(object sender, EventArgs e)
         {
+            FrmTimKiem form = new FrmTimKiem();
+            form.ShowDialog();
 
+            if (Helper.tempSinhVien.StudentCode != 0)
+            {
+                List<Graph> list = BST.Search(Helper.tempSinhVien);
+                display(list);
+            }
         }
 
         private void btnCapNhatThongTin_Click(object sender, EventArgs e)

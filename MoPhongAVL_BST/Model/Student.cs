@@ -62,39 +62,39 @@ namespace MoPhongAVL_BST.Model
             /// 1 - Tìm kiếm dựa và student Code
             if (type == 1)
             {
-                if (b.StudentCode == this.StudentCode) return false;
-                return true;
+                if (b.StudentCode == this.StudentCode) return true;
+                return false;
             }
 
             // 2 - Tìm kiếm dựa vào họ tên
             if (type == 2)
             {
-                if (b.FullName.CompareTo(this.FullName) == 0) return false;
-                return true;
+                if (b.FullName.CompareTo(this.FullName) == 0) return true;
+                return false;
             }
 
             // 3 - Tìm kiếm dựa vào ngày sinh
             if (type == 3)
             {
-                if (b.DateOfBirth.CompareTo(this.DateOfBirth) == 0) return false;
-                return true;
+                if (b.DateOfBirth.CompareTo(this.DateOfBirth) == 0) return true;
+                return false;
             }
 
             // 4 - Tìm kiếm dựa vào điểm tích lũy 
             if (type == 4)
             {
-                if (b.Score == Score) return false;
-                return true;
+                if (b.Score == Score) return true;
+                return false;
             }
 
             // 5 - Tìm kiếm dựa vào số tín chỉ tích lũy
             if (type == 5)
             {
-                if (b.Count == Count) return false;
-                return true;
+                if (b.Count == Count) return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
     }

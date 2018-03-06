@@ -216,20 +216,21 @@ namespace MoPhongAVL_BST.Pointer
             if (a.Info.isSame(searchStudent, Type))
             {
                 Graph foundGraph = display();
-                foreach (var item in curGraph.listCircle)
+                foreach (var item in foundGraph.listCircle)
                     if (item.Code == a.Info.StudentCode)
-                        item.Color = System.Drawing.Color.Blue;               
+                        item.Color = System.Drawing.Color.Blue;
+                ans.Add(foundGraph);         
                 return ans;
             }
             
-            if (a.LeftChild != null && searchStudent.Compare(a.Info, Type))
+            if (a.LeftChild != null && !searchStudent.Compare(a.Info, Type))
             {
                 List<Graph> z = getSearch(a.LeftChild, searchStudent);
                 ans.AddRange(z);
                 return ans;
             }
 
-            if (a.RightChild != null && !searchStudent.Compare(a.Info, Type))
+            if (a.RightChild != null && searchStudent.Compare(a.Info, Type))
             {
                 List<Graph> z = getSearch(a.RightChild, searchStudent);
                 ans.AddRange(z);
