@@ -48,6 +48,10 @@ namespace MoPhongAVL_BST.Pointer
         public List<Graph> Insert(Node a)
         {
             List<Graph> ans = new List<Graph>();
+            if (isFound(Root, a.Info))
+            {
+                ans.Add(display());
+            }
             return getInsert(Root, a);
         }
 
@@ -71,8 +75,7 @@ namespace MoPhongAVL_BST.Pointer
 
             // Lấy ra đồ thị cho điểm hiện tại
             curGraph = display();
-            string curText = getText(node);
-            foreach (var item in curGraph.listCircle) if (item.Text == curText) item.Color = System.Drawing.Color.Red;
+            foreach (var item in curGraph.listCircle) if (item.Code == node.Info.StudentCode) item.Color = System.Drawing.Color.Red;
 
             ans.Add(curGraph);
 
@@ -86,14 +89,14 @@ namespace MoPhongAVL_BST.Pointer
                     node.RightChild = addNode;
                     Graph afterAdd = display();
                     foreach(var item in afterAdd.listCircle)
-                        if (item.Text == getText(addNode))
+                        if (item.Code == addNode.Info.StudentCode)
                             item.Color = System.Drawing.Color.Blue;
                     ans.Add(afterAdd);
                 }
                 else
                 {
                     // Duyệt sang cây bên phải
-                    Line line = getLine(curGraph, curText, getText(node.RightChild));
+                    Line line = getLine(curGraph, node.Info.StudentCode, node.RightChild.Info.StudentCode);
                     line.Color = System.Drawing.Color.Orange;
                     ans.AddRange(getInsert(node.RightChild, addNode));
                 }
@@ -108,14 +111,14 @@ namespace MoPhongAVL_BST.Pointer
                     node.LeftChild = addNode;
                     Graph afterAdd = display();
                     foreach (var item in afterAdd.listCircle)
-                        if (item.Text == getText(addNode))
+                        if (item.Code == addNode.Info.StudentCode)
                             item.Color = System.Drawing.Color.Blue;
                     ans.Add(afterAdd);
                 }
                 else
                 {
                     // Duyệt sang cây bên phải
-                    Line line = getLine(curGraph, curText, getText(node.LeftChild));
+                    Line line = getLine(curGraph, node.Info.StudentCode, node.LeftChild.Info.StudentCode);
                     line.Color = System.Drawing.Color.Orange;
                     ans.AddRange(getInsert(node.LeftChild, addNode));
                 }
@@ -126,6 +129,14 @@ namespace MoPhongAVL_BST.Pointer
         #endregion
 
         #region Delete
+        public List<Graph> Clear()
+        {
+            List<Graph> ans = new List<Graph>();
+
+            Root = null;
+
+            return ans;
+        }
         public List<Graph> Delete(Student a)
         {
             List<Graph> ans = Search(a);
@@ -199,14 +210,14 @@ namespace MoPhongAVL_BST.Pointer
 
             if (a == null) return ans;
 
-            foreach (var item in curGraph.listCircle) if (item.Text == getText(a)) item.Color = System.Drawing.Color.Red;
+            foreach (var item in curGraph.listCircle) if (item.Code == a.Info.StudentCode) item.Color = System.Drawing.Color.Red;
             ans.Add(curGraph);
 
             if (a.Info.isSame(searchStudent, Type))
             {
                 Graph foundGraph = display();
                 foreach (var item in curGraph.listCircle)
-                    if (item.Text == getText(a))
+                    if (item.Code == a.Info.StudentCode)
                         item.Color = System.Drawing.Color.Blue;               
                 return ans;
             }
@@ -268,7 +279,7 @@ namespace MoPhongAVL_BST.Pointer
 
             Graph curGraph = display();
             foreach (var item in curGraph.listCircle)
-                if (item.Text == getText(node))
+                if (item.Code == node.Info.StudentCode)
                     item.Color = System.Drawing.Color.Red;
             ans.Add(curGraph);
 
@@ -306,7 +317,7 @@ namespace MoPhongAVL_BST.Pointer
 
             Graph curGraph = display();
             foreach (var item in curGraph.listCircle)
-                if (item.Text == getText(node))
+                if (item.Code == node.Info.StudentCode)
                     item.Color = System.Drawing.Color.Red;
             ans.Add(curGraph);
 
@@ -326,7 +337,7 @@ namespace MoPhongAVL_BST.Pointer
 
             Graph curGraph = display();
             foreach (var item in curGraph.listCircle)
-                if (item.Text == getText(node))
+                if (item.Code == node.Info.StudentCode)
                     item.Color = System.Drawing.Color.Red;
             ans.Add(curGraph);
 
@@ -371,7 +382,8 @@ namespace MoPhongAVL_BST.Pointer
                     x = (miX + maX) / 2,
                     fontSize = 11,
                     Width = 2,
-                    Color = System.Drawing.Color.Green
+                    Color = System.Drawing.Color.Green,
+                    Code = a.Info.StudentCode
                 };
 
 
@@ -440,15 +452,15 @@ namespace MoPhongAVL_BST.Pointer
             return "";
         }
 
-        private Line getLine(Graph a, string ParentText, string ChildText)
+        private Line getLine(Graph a, int ParentCode, int ChildCode)
         {
             Circle parent = new Circle();
             Circle child = new Circle();
 
             foreach(var item in a.listCircle)
             {
-                if (item.Text == ParentText) parent = item;
-                if (item.Text == ChildText) child = item;
+                if (item.Code == ParentCode) parent = item;
+                if (item.Code == ChildCode) child = item;
             }
 
             Line ans = Helper.Connect(parent, child);

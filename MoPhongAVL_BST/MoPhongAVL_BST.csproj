@@ -47,17 +47,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="GUI\FrmCapNhat.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="GUI\FrmCapNhat.Designer.cs">
+      <DependentUpon>FrmCapNhat.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\FrmDraw.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\FrmDraw.Designer.cs">
       <DependentUpon>FrmDraw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FrmThemNode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FrmThemNode.Designer.cs">
+      <DependentUpon>FrmThemNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FrmTimKiem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FrmTimKiem.Designer.cs">
+      <DependentUpon>FrmTimKiem.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Student.cs" />
     <Compile Include="Object\Circle.cs" />
@@ -69,11 +87,20 @@
     <Compile Include="Pointer\Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\FrmCapNhat.resx">
+      <DependentUpon>FrmCapNhat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\FrmDraw.resx">
       <DependentUpon>FrmDraw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FrmThemNode.resx">
+      <DependentUpon>FrmThemNode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FrmTimKiem.resx">
+      <DependentUpon>FrmTimKiem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

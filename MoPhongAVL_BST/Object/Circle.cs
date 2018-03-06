@@ -17,6 +17,7 @@ namespace MoPhongAVL_BST.Object
         public Color Color { get; set; }
         public int fontSize { get; set; }
         public int Width { get; set; }
+        public int Code { get; set; }
 
         // Function
         public void Draw(PaintEventArgs e)
