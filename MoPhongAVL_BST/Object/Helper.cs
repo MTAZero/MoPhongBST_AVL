@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoPhongAVL_BST.Model;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace MoPhongAVL_BST.Object
 {
     public static class Helper
     {
+
+        #region Local function
         private static float khoangcach(int x1, int y1, int x2, int y2)
         {
             return (float) Math.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
@@ -36,5 +39,10 @@ namespace MoPhongAVL_BST.Object
 
             return ans;
         }
+        #endregion
+
+        #region Local variable
+        public static Student tempSinhVien = new Student();
+        #endregion
     }
 }

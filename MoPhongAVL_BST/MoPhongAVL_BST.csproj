@@ -83,6 +83,7 @@
     <Compile Include="GUI\FrmXoaNode.Designer.cs">
       <DependentUpon>FrmXoaNode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Data.cs" />
     <Compile Include="Model\Student.cs" />
     <Compile Include="Object\Circle.cs" />
     <Compile Include="Object\Graph.cs" />

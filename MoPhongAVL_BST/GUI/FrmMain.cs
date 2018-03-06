@@ -15,7 +15,7 @@ namespace MoPhongAVL_BST.GUI
 {
     public partial class FrmMain : Form
     {
-        private BST_Tree BST = new BST_Tree() { MaxWidth = 1500, Type = 4 };
+        private BST_Tree BST = Data.BST;
         private List<Graph> graphDisplay = new List<Graph>();
         private int IndexGraphDisplay = 0;
         private int cnt = 0;
@@ -65,16 +65,37 @@ namespace MoPhongAVL_BST.GUI
             graphDisplay = list;
             IndexGraphDisplay = 0;
             Timer.Enabled = true;
-            Timer.Interval = 300;
+            Timer.Interval = 500;
         }
         #endregion
 
         #region Sự kiện
         private void btnThemNode_Click(object sender, EventArgs e)
         {
-            Random rd = new Random();
-            List<Graph> list = BST.Insert(new Student() { StudentCode = ++cnt, Score =  rd.Next(100)});
-            display(list);
+            FrmThemNode form = new FrmThemNode();
+            form.ShowDialog();
+
+            if (Helper.tempSinhVien.StudentCode != 0)
+            {
+                List<Graph> list = BST.Insert(Helper.tempSinhVien);
+                display(list);
+            }
+        }
+
+        private void btnSkip_Click(object sender, EventArgs e)
+        {
+            Timer.Enabled = false;
+
+            IndexGraphDisplay = graphDisplay.Count - 1;
+            Graph z = graphDisplay[IndexGraphDisplay];
+            FrmDraw draw = new FrmDraw(z);
+            draw.TopLevel = false;
+            draw.Dock = DockStyle.Fill;
+            panelDraw.Controls.Clear();
+            panelDraw.Controls.Add(draw);
+            draw.Show();
+
+            UnLockButton();
         }
 
         private void btnTimNode_Click(object sender, EventArgs e)
@@ -128,5 +149,7 @@ namespace MoPhongAVL_BST.GUI
             IndexGraphDisplay++;
         }
         #endregion
+
+        
     }
 }

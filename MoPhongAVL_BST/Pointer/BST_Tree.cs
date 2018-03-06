@@ -430,7 +430,10 @@ namespace MoPhongAVL_BST.Pointer
 
         private List<Student> getStudent(Node node)
         {
+           
             var ans = new List<Student>();
+
+            if (node == null) return ans;
 
             if (node.LeftChild != null) ans.AddRange(getStudent(node.LeftChild));
             ans.Add(node.Info);

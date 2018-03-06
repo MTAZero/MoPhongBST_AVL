@@ -34,6 +34,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panelDraw = new System.Windows.Forms.Panel();
             this.panelChucNang = new System.Windows.Forms.Panel();
+            this.btnSkip = new System.Windows.Forms.Button();
             this.btnXoaCay = new System.Windows.Forms.Button();
             this.btnDuyetCay = new System.Windows.Forms.Button();
             this.btnXoaNode = new System.Windows.Forms.Button();
@@ -49,7 +50,6 @@
             this.rdAVL = new System.Windows.Forms.RadioButton();
             this.rdBST = new System.Windows.Forms.RadioButton();
             this.Timer = new System.Windows.Forms.Timer(this.components);
-            this.btnSkip = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -121,6 +121,19 @@
             this.panelChucNang.Name = "panelChucNang";
             this.panelChucNang.Size = new System.Drawing.Size(301, 699);
             this.panelChucNang.TabIndex = 0;
+            // 
+            // btnSkip
+            // 
+            this.btnSkip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSkip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnSkip.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSkip.Location = new System.Drawing.Point(9, 646);
+            this.btnSkip.Name = "btnSkip";
+            this.btnSkip.Size = new System.Drawing.Size(284, 40);
+            this.btnSkip.TabIndex = 8;
+            this.btnSkip.Text = "Bỏ qua mô phỏng";
+            this.btnSkip.UseVisualStyleBackColor = false;
+            this.btnSkip.Click += new System.EventHandler(this.btnSkip_Click);
             // 
             // btnXoaCay
             // 
@@ -288,17 +301,6 @@
             // 
             this.Timer.Interval = 750;
             this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
-            // 
-            // btnSkip
-            // 
-            this.btnSkip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnSkip.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSkip.Location = new System.Drawing.Point(9, 646);
-            this.btnSkip.Name = "btnSkip";
-            this.btnSkip.Size = new System.Drawing.Size(284, 40);
-            this.btnSkip.TabIndex = 8;
-            this.btnSkip.Text = "Bỏ qua mô phỏng";
-            this.btnSkip.UseVisualStyleBackColor = false;
             // 
             // FrmMain
             // 
