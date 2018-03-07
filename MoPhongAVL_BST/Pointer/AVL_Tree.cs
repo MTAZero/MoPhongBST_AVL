@@ -48,9 +48,12 @@ namespace MoPhongAVL_BST.Pointer
         private List<Graph> tempGraph = new List<Graph>();
         public List<Graph> Insert(Node a)
         {
+            a.Height = 1;
+
             tempGraph = new List<Graph>();
             Root = InsertIntoNode(Root, a);
 
+            tempGraph.Add(display());
             return tempGraph;
         }
 
@@ -89,14 +92,14 @@ namespace MoPhongAVL_BST.Pointer
             root.Height = Math.Max(Hei(root.LeftChild), Hei(root.RightChild)) + 1;
             int balance = getBalance(root);
 
-            if (balance > 1 && root.Info.Compare(addNode.Info, Type)) return RightRotate(root);
-            if (balance < 1 && !root.Info.Compare(addNode.Info, Type)) return LeftRotate(root);
-            if (balance>1 && !root.Info.Compare(addNode.Info, Type))
+            if (balance > 1 && root.LeftChild.Info.Compare(addNode.Info, Type)) return RightRotate(root);
+            if (balance < -1 && !root.RightChild.Info.Compare(addNode.Info, Type)) return LeftRotate(root);
+            if (balance > 1 && !root.LeftChild.Info.Compare(addNode.Info, Type))
             {
                 root.LeftChild = LeftRotate(root.LeftChild);
                 return RightRotate(root);
             }
-            if (balance<1 && root.Info.Compare(addNode.Info, Type))
+            if (balance < -1 && root.RightChild.Info.Compare(addNode.Info, Type))
             {
                 root.RightChild = RightRotate(root.RightChild);
                 return LeftRotate(root);
@@ -137,7 +140,7 @@ namespace MoPhongAVL_BST.Pointer
                     // Nếu nút này là lá
                     Node Parent = root.Parent;
 
-                    if (Parent.LeftChild == root)
+                    if (Parent != null && Parent.LeftChild == root)
                         Parent.LeftChild = null;
                     else
                         Parent.RightChild = null;
@@ -184,12 +187,6 @@ namespace MoPhongAVL_BST.Pointer
                 Node _Parent = root.Parent;
                 Node _ParentMaxLeft = maxLeft.Parent;
 
-                if (_ParentMaxLeft != null && maxLeft == _ParentMaxLeft.LeftChild)
-                {
-                    _ParentMaxLeft.LeftChild = maxLeft.LeftChild;
-                    if (maxLeft.LeftChild != null)
-                        maxLeft.LeftChild.Parent = _ParentMaxLeft;
-                }
                 if (_ParentMaxLeft != null && maxLeft == _ParentMaxLeft.RightChild)
                 {
                     _ParentMaxLeft.RightChild = maxLeft.LeftChild;
@@ -204,6 +201,7 @@ namespace MoPhongAVL_BST.Pointer
 
                 maxLeft.Parent = _Parent;
                 maxLeft.RightChild = root.RightChild;
+                maxLeft.LeftChild = root.LeftChild;
                 if (maxLeft.RightChild != null) maxLeft.RightChild.Parent = maxLeft;
 
                 if (root == Root) Root = maxLeft;
@@ -584,26 +582,9 @@ namespace MoPhongAVL_BST.Pointer
         #endregion
 
         #region Hàm quay cây để hỗ trợ cân bằng cây
-        
+
         // Quay trái cây
         private Node LeftRotate(Node root)
-        {
-            if (root == null) return root;
-            if (root.LeftChild == null) return root;
-
-            Node newRoot = root.LeftChild;
-
-            root.LeftChild = newRoot.RightChild;
-            if (newRoot.RightChild != null) newRoot.RightChild.Parent = root;
-
-            newRoot.RightChild = root;
-            root.Parent = newRoot;
-
-            return newRoot;
-        }
-
-        // Quay phải cây
-        private Node RightRotate(Node root)
         {
             if (root == null) return root;
             if (root.RightChild == null) return root;
@@ -614,7 +595,31 @@ namespace MoPhongAVL_BST.Pointer
             if (newRoot.LeftChild != null) newRoot.LeftChild.Parent = root;
 
             newRoot.LeftChild = root;
+            newRoot.Parent = root.Parent;
             root.Parent = newRoot;
+
+            root.Height = Math.Max(Hei(root.LeftChild), Hei(root.RightChild)) + 1;
+            newRoot.Height = Math.Max(Hei(newRoot.LeftChild), Hei(newRoot.RightChild)) + 1;
+
+            return newRoot;
+        }
+
+        // Quay phải cây
+        private Node RightRotate(Node root)
+        {
+            if (root == null) return root;
+            if (root.LeftChild == null) return root;
+
+            Node newRoot = root.LeftChild;
+            root.LeftChild = newRoot.RightChild;
+            if (newRoot.RightChild != null) newRoot.RightChild.Parent = root;
+
+            newRoot.RightChild = root;
+            newRoot.Parent = root.Parent;
+            root.Parent = newRoot;
+
+            root.Height = Math.Max(Hei(root.LeftChild), Hei(root.RightChild)) + 1;
+            newRoot.Height = Math.Max(Hei(newRoot.LeftChild), Hei(newRoot.RightChild)) + 1;
 
             return newRoot;
         }

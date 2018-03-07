@@ -15,7 +15,7 @@ namespace MoPhongAVL_BST.GUI
 {
     public partial class FrmMain : Form
     {
-        private BST_Tree BST = Data.BST;
+        private AVL_Tree BST = Data.BST;
         private List<Graph> graphDisplay = new List<Graph>();
         private int IndexGraphDisplay = 0;
         private int cnt = 0;

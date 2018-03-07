@@ -9,7 +9,7 @@ namespace MoPhongAVL_BST.Model
 {
     public static class Data
     {
-        public static BST_Tree BST = new BST_Tree() { MaxWidth = 1000, Type = 2 };
+        public static AVL_Tree BST = new AVL_Tree() { MaxWidth = 1000, Type = 2 };
         
         public static bool CodeIsOk(Student z)
         {

@@ -158,7 +158,7 @@ namespace MoPhongAVL_BST.Pointer
                     // Nếu nút này là lá
                     Node Parent = root.Parent;
 
-                    if (Parent.LeftChild == root)
+                    if (Parent != null && Parent.LeftChild == root)
                         Parent.LeftChild = null;
                     else
                         Parent.RightChild = null;
@@ -205,12 +205,6 @@ namespace MoPhongAVL_BST.Pointer
                 Node _Parent = root.Parent;
                 Node _ParentMaxLeft = maxLeft.Parent;
 
-                if (_ParentMaxLeft != null && maxLeft == _ParentMaxLeft.LeftChild)
-                {
-                    _ParentMaxLeft.LeftChild = maxLeft.LeftChild;
-                    if (maxLeft.LeftChild != null)
-                        maxLeft.LeftChild.Parent = _ParentMaxLeft;
-                }
                 if (_ParentMaxLeft != null && maxLeft == _ParentMaxLeft.RightChild)
                 {
                     _ParentMaxLeft.RightChild = maxLeft.LeftChild;
@@ -225,6 +219,7 @@ namespace MoPhongAVL_BST.Pointer
 
                 maxLeft.Parent = _Parent;
                 maxLeft.RightChild = root.RightChild;
+                maxLeft.LeftChild = root.LeftChild;
                 if (maxLeft.RightChild != null) maxLeft.RightChild.Parent = maxLeft;
 
                 if (root == Root) Root = maxLeft;
