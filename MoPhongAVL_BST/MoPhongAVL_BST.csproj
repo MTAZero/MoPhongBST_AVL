@@ -47,12 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\FrmCapNhat.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\FrmCapNhat.Designer.cs">
-      <DependentUpon>FrmCapNhat.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\FrmDraw.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +71,12 @@
     <Compile Include="GUI\FrmTimKiem.Designer.cs">
       <DependentUpon>FrmTimKiem.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\FrmCapNhat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FrmCapNhat.Designer.cs">
+      <DependentUpon>FrmCapNhat.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\FrmXoaNode.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,9 +94,6 @@
     <Compile Include="Pointer\Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GUI\FrmCapNhat.resx">
-      <DependentUpon>FrmCapNhat.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\FrmDraw.resx">
       <DependentUpon>FrmDraw.cs</DependentUpon>
     </EmbeddedResource>
@@ -108,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\FrmTimKiem.resx">
       <DependentUpon>FrmTimKiem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FrmCapNhat.resx">
+      <DependentUpon>FrmCapNhat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\FrmXoaNode.resx">
       <DependentUpon>FrmXoaNode.cs</DependentUpon>

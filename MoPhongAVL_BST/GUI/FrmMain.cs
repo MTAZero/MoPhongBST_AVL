@@ -112,12 +112,26 @@ namespace MoPhongAVL_BST.GUI
 
         private void btnCapNhatThongTin_Click(object sender, EventArgs e)
         {
+            FrmCapNhat form = new FrmCapNhat();
+            form.ShowDialog();
 
+            if (Helper.tempSinhVien.StudentCode != 0)
+            {
+                List<Graph> list = BST.Update(Helper.tempSinhVien);
+                display(list);
+            }
         }
 
         private void btnXoaNode_Click(object sender, EventArgs e)
         {
+            FrmXoaNode form = new FrmXoaNode();
+            form.ShowDialog();
 
+            if (Helper.tempSinhVien.StudentCode != 0)
+            {
+                List<Graph> list = BST.Delete(Helper.tempSinhVien);
+                display(list);
+            }
         }
 
         private void btnDuyetCay_Click(object sender, EventArgs e)

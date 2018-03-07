@@ -254,7 +254,50 @@ namespace MoPhongAVL_BST.Pointer
         #region Update
         public List<Graph> Update(Student a)
         {
-            return new List<Graph>();
+            return getUpdate(Root, a);
+        }
+
+        private List<Graph> getUpdate(Node a,Student searchStudent)
+        {
+            List<Graph> ans = new List<Graph>();
+            Graph curGraph = display();
+
+            if (a == null) return ans;
+
+            foreach (var item in curGraph.listCircle) if (item.Code == a.Info.StudentCode) item.Color = System.Drawing.Color.Red;
+            ans.Add(curGraph);
+
+            if (a.Info.isSame(searchStudent, Type) && a.Info.StudentCode == searchStudent.StudentCode)
+            {
+                Graph foundGraph = display();
+                foreach (var item in foundGraph.listCircle)
+                    if (item.Code == a.Info.StudentCode)
+                        item.Color = System.Drawing.Color.Pink;
+                ans.Add(foundGraph);
+
+                a.Info.FullName = searchStudent.FullName;
+                a.Info.DateOfBirth = searchStudent.DateOfBirth;
+                a.Info.Score = searchStudent.Score;
+                a.Info.Count = searchStudent.Count;
+
+                return ans;
+            }
+
+            if (a.RightChild != null && searchStudent.Compare(a.Info, Type))
+            {
+                List<Graph> z = getUpdate(a.RightChild, searchStudent);
+                ans.AddRange(z);
+                return ans;
+            }
+
+            if (a.LeftChild != null && !searchStudent.Compare(a.Info, Type))
+            {
+                List<Graph> z = getUpdate(a.LeftChild, searchStudent);
+                ans.AddRange(z);
+                return ans;
+            }
+
+            return ans;
         }
         #endregion
 
