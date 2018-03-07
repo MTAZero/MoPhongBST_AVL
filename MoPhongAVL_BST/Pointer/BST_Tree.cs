@@ -224,6 +224,8 @@ namespace MoPhongAVL_BST.Pointer
                     _Parent.RightChild = maxLeft;
 
                 maxLeft.Parent = _Parent;
+                maxLeft.RightChild = root.RightChild;
+                if (maxLeft.RightChild != null) maxLeft.RightChild.Parent = maxLeft;
 
                 if (root == Root) Root = maxLeft;
 
@@ -239,8 +241,7 @@ namespace MoPhongAVL_BST.Pointer
                 ans.AddRange(getDelete(root.LeftChild, a));
                 return ans;
             }
-
-            if (root.RightChild != null && !root.Info.Compare(a, Type))
+            else
             {
                 ans.AddRange(getDelete(root.RightChild, a));
                 return ans;
