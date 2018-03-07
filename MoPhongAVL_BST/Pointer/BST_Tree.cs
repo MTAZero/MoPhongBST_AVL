@@ -57,7 +57,7 @@ namespace MoPhongAVL_BST.Pointer
 
         private List<Graph> getInsert(Node node, Node addNode)
         {
-            
+
 
             Graph curGraph = new Graph();
             List<Graph> ans = new List<Graph>();
@@ -88,7 +88,7 @@ namespace MoPhongAVL_BST.Pointer
                     addNode.Parent = node;
                     node.RightChild = addNode;
                     Graph afterAdd = display();
-                    foreach(var item in afterAdd.listCircle)
+                    foreach (var item in afterAdd.listCircle)
                         if (item.Code == addNode.Info.StudentCode)
                             item.Color = System.Drawing.Color.Blue;
                     ans.Add(afterAdd);
@@ -139,20 +139,19 @@ namespace MoPhongAVL_BST.Pointer
         }
         public List<Graph> Delete(Student a)
         {
-            List<Graph> ans = Search(a);
-
-            if (!isFound(Root, a)) return ans;
-            realDelete(Root, a);
-            Graph curGr = display();
-            ans.Add(curGr);
-
-            return ans;
+            return getDelete(Root, a);
         }
 
-        private void realDelete(Node root, Student a)
+        private List<Graph> getDelete(Node root, Student a)
         {
-            if (root == null) return;
-            if (root.Info.isSame(a, Type))
+            List<Graph> ans = new List<Graph>();
+            Graph curGraph = display();
+
+            if (root == null) return ans;
+            foreach (var item in curGraph.listCircle) if (item.Code == root.Info.StudentCode) item.Color = System.Drawing.Color.Red;
+            ans.Add(curGraph);
+
+            if (root.Info.isSame(a, Type) && a.StudentCode == root.Info.StudentCode)
             {
                 if (root.LeftChild == null && root.RightChild == null)
                 {
@@ -164,7 +163,12 @@ namespace MoPhongAVL_BST.Pointer
                     else
                         Parent.RightChild = null;
 
-                    return;
+                    if (root == Root) Root = null;
+
+                    Graph zz = display();
+                    ans.Add(zz);
+
+                    return ans;
                 }
 
                 if (root.LeftChild == null || root.RightChild == null)
@@ -177,23 +181,73 @@ namespace MoPhongAVL_BST.Pointer
                     else
                         child = root.LeftChild;
                     Parent = root.Parent;
+                    child.Parent = Parent;
 
-                    if (Parent.LeftChild == root)
+                    if (Parent != null && Parent.LeftChild == root)
                         Parent.LeftChild = child;
-                    else
+                    if (Parent != null && Parent.RightChild == root)
                         Parent.RightChild = child;
-                    return;
+
+                    if (root == Root)
+                        Root = child;
+
+
+                    Graph zz = display();
+                    ans.Add(zz);
+
+                    return ans;
                 }
 
-                /// còn trường hợp code có 2 con
-               
+                /// Trường hợp code có 2 con
+
+                Node maxLeft = MaxInLeftChild(root);
+
+                Node _Parent = root.Parent;
+                Node _ParentMaxLeft = maxLeft.Parent;
+
+                if (_ParentMaxLeft != null && maxLeft == _ParentMaxLeft.LeftChild)
+                {
+                    _ParentMaxLeft.LeftChild = maxLeft.LeftChild;
+                    if (maxLeft.LeftChild != null)
+                        maxLeft.LeftChild.Parent = _ParentMaxLeft;
+                }
+                if (_ParentMaxLeft != null && maxLeft == _ParentMaxLeft.RightChild)
+                {
+                    _ParentMaxLeft.RightChild = maxLeft.LeftChild;
+                    if (maxLeft.LeftChild != null)
+                        maxLeft.LeftChild.Parent = _ParentMaxLeft;
+                }
+
+                if (_Parent != null && root == _Parent.LeftChild)
+                    _Parent.LeftChild = maxLeft;
+                if (_Parent != null && root == _Parent.RightChild)
+                    _Parent.RightChild = maxLeft;
+
+                maxLeft.Parent = _Parent;
+
+                if (root == Root) Root = maxLeft;
+
+                Graph zz1 = display();
+                ans.Add(zz1);
+                return ans;
+
+
             }
 
-            if (root.Info.Compare(a, Type))
-                realDelete(root.LeftChild, a);
-            else
-                realDelete(root.RightChild, a);
-                
+            if (root.LeftChild != null && root.Info.Compare(a, Type))
+            {
+                ans.AddRange(getDelete(root.LeftChild, a));
+                return ans;
+            }
+
+            if (root.RightChild != null && !root.Info.Compare(a, Type))
+            {
+                ans.AddRange(getDelete(root.RightChild, a));
+                return ans;
+            }
+
+            return ans;
+
         }
         #endregion
 
@@ -219,10 +273,10 @@ namespace MoPhongAVL_BST.Pointer
                 foreach (var item in foundGraph.listCircle)
                     if (item.Code == a.Info.StudentCode)
                         item.Color = System.Drawing.Color.Blue;
-                ans.Add(foundGraph);         
+                ans.Add(foundGraph);
                 return ans;
             }
-            
+
             if (a.LeftChild != null && !searchStudent.Compare(a.Info, Type))
             {
                 List<Graph> z = getSearch(a.LeftChild, searchStudent);
@@ -248,7 +302,7 @@ namespace MoPhongAVL_BST.Pointer
             if (a.Info.Compare(searchStudent, Type)) return isFound(a.LeftChild, searchStudent);
 
             return isFound(a.RightChild, searchStudent);
-        } 
+        }
         #endregion
 
         #region Update
@@ -257,7 +311,7 @@ namespace MoPhongAVL_BST.Pointer
             return getUpdate(Root, a);
         }
 
-        private List<Graph> getUpdate(Node a,Student searchStudent)
+        private List<Graph> getUpdate(Node a, Student searchStudent)
         {
             List<Graph> ans = new List<Graph>();
             Graph curGraph = display();
@@ -389,7 +443,7 @@ namespace MoPhongAVL_BST.Pointer
             {
                 List<Graph> leftGr = getLNR(node.LeftChild);
                 ans.AddRange(leftGr);
-            }            
+            }
 
             if (node.RightChild != null)
             {
@@ -446,9 +500,9 @@ namespace MoPhongAVL_BST.Pointer
                 ans.listLine.Add(line);
             }
 
-           
+
             ans.listCircle.Add(currentNode);
-            
+
 
             if (a.RightChild != null)
             {
@@ -474,7 +528,7 @@ namespace MoPhongAVL_BST.Pointer
 
         private List<Student> getStudent(Node node)
         {
-           
+
             var ans = new List<Student>();
 
             if (node == null) return ans;
@@ -504,7 +558,7 @@ namespace MoPhongAVL_BST.Pointer
             Circle parent = new Circle();
             Circle child = new Circle();
 
-            foreach(var item in a.listCircle)
+            foreach (var item in a.listCircle)
             {
                 if (item.Code == ParentCode) parent = item;
                 if (item.Code == ChildCode) child = item;
@@ -517,6 +571,35 @@ namespace MoPhongAVL_BST.Pointer
                     return item;
 
             return new Line();
+        }
+
+        private Node FindMax(Node root)
+        {
+            if (root == null) return new Node();
+            if (root.RightChild != null) return FindMax(root.RightChild);
+
+            return root;
+        }
+
+        private Node FindMin(Node root)
+        {
+            if (root == null) return new Node();
+            if (root.LeftChild != null) return FindMin(root.LeftChild);
+
+            return root;
+        }
+
+        private Node MinInRightChild(Node a)
+        {
+            if (a == null) return new Pointer.Node();
+            return FindMin(a.RightChild);
+        }
+
+        private Node MaxInLeftChild(Node a)
+        {
+            if (a == null) return new Pointer.Node();
+
+            return FindMax(a.LeftChild);
         }
         #endregion
 

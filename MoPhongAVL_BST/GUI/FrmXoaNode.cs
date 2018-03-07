@@ -16,7 +16,7 @@ namespace MoPhongAVL_BST.GUI
     {
         public FrmXoaNode()
         {
-            Helper.tempSinhVien.StudentCode = 0;
+            Helper.tempSinhVien = new Student();
             InitializeComponent();
             
         }
@@ -58,7 +58,7 @@ namespace MoPhongAVL_BST.GUI
             try
             {
                 var listStudent = Data.BST.getListStudent();
-                int StudentCode = (int) dgvDanhSachSinhVien.SelectedRows[0].Cells["StudenCode"].Value;
+                int StudentCode = (int) dgvDanhSachSinhVien.SelectedRows[0].Cells["StudentCode"].Value;
 
                 Student k = listStudent.Where(p => p.StudentCode == StudentCode).FirstOrDefault();
                 Helper.tempSinhVien = k;
