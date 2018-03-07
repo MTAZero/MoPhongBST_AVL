@@ -45,93 +45,66 @@ namespace MoPhongAVL_BST.Pointer
             return Insert(z);
         }
 
+        private List<Graph> tempGraph = new List<Graph>();
         public List<Graph> Insert(Node a)
         {
-            List<Graph> ans = new List<Graph>();
-            if (isFound(Root, a.Info))
-            {
-                ans.Add(display());
-            }
-            return getInsert(Root, a);
+            tempGraph = new List<Graph>();
+            Root = InsertIntoNode(Root, a);
+
+            return tempGraph;
         }
 
-        private List<Graph> getInsert(Node node, Node addNode)
+        private Node InsertIntoNode(Node root, Node addNode)
         {
+            if (root == null) return addNode;
 
-
-            Graph curGraph = new Graph();
-            List<Graph> ans = new List<Graph>();
-
-            if (node == null)
+            /// thêm đồ thị của node hiện tại :3
+            Graph z = display();
+            foreach (var ht in z.listCircle) if (ht.Code == root.Info.StudentCode)
+                    ht.Color = System.Drawing.Color.Red;
+            if (root.Parent != null)
             {
-                Root = addNode;
-                Graph afterAdd = display();
-                foreach (var item in afterAdd.listCircle)
-                    if (item.Text == getText(addNode))
-                        item.Color = System.Drawing.Color.Blue;
-                ans.Add(afterAdd);
-                return ans;
+                Line ln = getLine(z, root.Parent.Info.StudentCode, root.Info.StudentCode);
+                ln.Color = System.Drawing.Color.Orange;
             }
+            tempGraph.Add(z);
 
-            // Lấy ra đồ thị cho điểm hiện tại
-            curGraph = display();
-            foreach (var item in curGraph.listCircle) if (item.Code == node.Info.StudentCode) item.Color = System.Drawing.Color.Red;
-
-            ans.Add(curGraph);
-
-            if (addNode.Info.Compare(node.Info, Type))
+            if (root.Info.Compare(addNode.Info, Type))
             {
-                /// Node nằm bên phải
-                if (node.RightChild == null)
-                {
-                    // thêm nút con
-                    addNode.Parent = node;
-                    node.RightChild = addNode;
-                    addNode.Height = 1;
-
-                    Graph afterAdd = display();
-                    foreach (var item in afterAdd.listCircle)
-                        if (item.Code == addNode.Info.StudentCode)
-                            item.Color = System.Drawing.Color.Blue;
-                    ans.Add(afterAdd);
-                }
-                else
-                {
-                    // Duyệt sang cây bên phải
-                    Line line = getLine(curGraph, node.Info.StudentCode, node.RightChild.Info.StudentCode);
-                    line.Color = System.Drawing.Color.Orange;
-                    ans.AddRange(getInsert(node.RightChild, addNode));
-                }
+                root.LeftChild = InsertIntoNode(root.LeftChild, addNode);
+                root.LeftChild.Parent = root;
             }
             else
             {
-                /// Node nằm bên trái
-                if (node.LeftChild == null)
-                {
-                    // thêm nút con
-                    addNode.Parent = node;
-                    node.LeftChild = addNode;
-                    Graph afterAdd = display();
-                    foreach (var item in afterAdd.listCircle)
-                        if (item.Code == addNode.Info.StudentCode)
-                            item.Color = System.Drawing.Color.Blue;
-                    ans.Add(afterAdd);
-                }
-                else
-                {
-                    // Duyệt sang cây bên phải
-                    Line line = getLine(curGraph, node.Info.StudentCode, node.LeftChild.Info.StudentCode);
-                    line.Color = System.Drawing.Color.Orange;
-                    ans.AddRange(getInsert(node.LeftChild, addNode));
-                }
+                root.RightChild = InsertIntoNode(root.RightChild, addNode);
+                root.RightChild.Parent = root;
             }
 
-            /// cân bằng cây
-            updateHeight(node);
-            int balance = getBalance(node);
+            // thêm đồ thị sau khi thêm
+            Graph z1 = display();
+            foreach (var ht in z1.listCircle) if (ht.Code == root.Info.StudentCode)
+                    ht.Color = System.Drawing.Color.Red;
+            tempGraph.Add(z1);
 
-            return ans;
+            root.Height = Math.Max(Hei(root.LeftChild), Hei(root.RightChild)) + 1;
+            int balance = getBalance(root);
+
+            if (balance > 1 && root.Info.Compare(addNode.Info, Type)) return RightRotate(root);
+            if (balance < 1 && !root.Info.Compare(addNode.Info, Type)) return LeftRotate(root);
+            if (balance>1 && !root.Info.Compare(addNode.Info, Type))
+            {
+                root.LeftChild = LeftRotate(root.LeftChild);
+                return RightRotate(root);
+            }
+            if (balance<1 && root.Info.Compare(addNode.Info, Type))
+            {
+                root.RightChild = RightRotate(root.RightChild);
+                return LeftRotate(root);
+            }
+
+            return root;
         }
+
         #endregion
 
         #region Delete
@@ -659,19 +632,6 @@ namespace MoPhongAVL_BST.Pointer
             return root.Height;
         }
 
-        // tính Height
-        private void updateHeight(Node root)
-        {
-            if (root == null) return;
-            root.Height = 1 + Math.Max(Hei(root.LeftChild), Hei(root.RightChild));
-        }
-
-        // cân bằng cây
-        private Node Balace(Node root)
-        {
-            return root;
-        }
-        
         #endregion
     }
 }
