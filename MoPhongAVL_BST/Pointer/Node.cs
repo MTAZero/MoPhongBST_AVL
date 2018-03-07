@@ -13,5 +13,6 @@ namespace MoPhongAVL_BST.Pointer
         public Node LeftChild { get; set; }
         public Node RightChild { get; set; }
         public Student Info { get; set; }
+        public int Height { get; set; }
     }
 }
