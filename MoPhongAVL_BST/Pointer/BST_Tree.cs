@@ -219,9 +219,9 @@ namespace MoPhongAVL_BST.Pointer
 
                 maxLeft.Parent = _Parent;
                 maxLeft.RightChild = root.RightChild;
-                maxLeft.LeftChild = root.LeftChild;
+                if (maxLeft != root.LeftChild) maxLeft.LeftChild = root.LeftChild;
                 if (maxLeft.RightChild != null) maxLeft.RightChild.Parent = maxLeft;
-
+                 
                 if (root == Root) Root = maxLeft;
 
                 Graph zz1 = display();

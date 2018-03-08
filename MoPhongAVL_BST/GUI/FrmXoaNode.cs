@@ -14,7 +14,6 @@ namespace MoPhongAVL_BST.GUI
 {
     public partial class FrmXoaNode : Form
     {
-        private bool isBST = Data.isBST;
         public FrmXoaNode()
         {
             Helper.tempSinhVien = new Student();
