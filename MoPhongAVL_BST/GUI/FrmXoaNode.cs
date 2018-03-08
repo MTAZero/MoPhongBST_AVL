@@ -14,6 +14,7 @@ namespace MoPhongAVL_BST.GUI
 {
     public partial class FrmXoaNode : Form
     {
+        private bool isBST = Data.isBST;
         public FrmXoaNode()
         {
             Helper.tempSinhVien = new Student();
@@ -27,7 +28,14 @@ namespace MoPhongAVL_BST.GUI
             var stt = 0;
             string key = txtTimKiem.Text;
 
-            dgvDanhSachSinhVien.DataSource = Data.BST.getListStudent()
+            var listz = new List<Student>();
+
+            if (Data.isBST)
+                listz = Data.BST.getListStudent();
+            else
+                listz = Data.AVL.getListStudent();
+
+            dgvDanhSachSinhVien.DataSource = listz.ToList()
                                              .Where(p=>p.FullName.Contains(key) || p.DateOfBirth.ToString("dd/MM/yyyy").Contains(key) || p.Score.ToString().Contains(key) || p.Count.ToString().Contains(key))
                                              .Select(p => new
                                              {
@@ -57,10 +65,15 @@ namespace MoPhongAVL_BST.GUI
         {
             try
             {
-                var listStudent = Data.BST.getListStudent();
+                var listz = new List<Student>();
+
+                if (Data.isBST)
+                    listz = Data.BST.getListStudent();
+                else
+                    listz = Data.AVL.getListStudent();
                 int StudentCode = (int) dgvDanhSachSinhVien.SelectedRows[0].Cells["StudentCode"].Value;
 
-                Student k = listStudent.Where(p => p.StudentCode == StudentCode).FirstOrDefault();
+                Student k = listz.ToList().Where(p => p.StudentCode == StudentCode).FirstOrDefault();
                 Helper.tempSinhVien = k;
                 this.Close();
             }

@@ -14,6 +14,8 @@ namespace MoPhongAVL_BST.GUI
 {
     public partial class FrmCapNhat : Form
     {
+        private bool isBST = Data.isBST;
+        private int Type = (Data.isBST) ? Data.BST.Type : Data.AVL.Type;
         public FrmCapNhat()
         {
             Helper.tempSinhVien = new Student();
@@ -24,7 +26,7 @@ namespace MoPhongAVL_BST.GUI
         #region LoadForm
         private void LoadInitControl()
         {
-            switch (Data.BST.Type){
+            switch (Type){
                 case 2: txtFullName.Enabled = false; break;
                 case 3: dateNgaySinh.Enabled = false; break;
                 case 4: txtDTB.Enabled = false; break;
@@ -35,8 +37,14 @@ namespace MoPhongAVL_BST.GUI
         {
             var stt = 0;
             string key = txtTimKiem.Text;
+            var listz = new List<Student>();
 
-            dgvDanhSachSinhVien.DataSource = Data.BST.getListStudent()
+            if (Data.isBST)
+                listz = Data.BST.getListStudent();
+            else
+                listz = Data.AVL.getListStudent();
+
+            dgvDanhSachSinhVien.DataSource = listz.ToList()
                                              .Where(p=>p.FullName.Contains(key) || p.DateOfBirth.ToString("dd/MM/yyyy").Contains(key) || p.Score.ToString().Contains(key) || p.Count.ToString().Contains(key))
                                              .Select(p => new
                                              {
@@ -151,8 +159,15 @@ namespace MoPhongAVL_BST.GUI
         {
             try
             {
+                var listz = new List<Student>();
+
+                if (Data.isBST)
+                    listz = Data.BST.getListStudent();
+                else
+                    listz = Data.AVL.getListStudent();
+
                 int k = (int) dgvDanhSachSinhVien.SelectedRows[0].Cells["StudentCode"].Value;
-                Student sv = Data.BST.getListStudent().Where(p => p.StudentCode == k).FirstOrDefault();
+                Student sv = listz.ToList().Where(p => p.StudentCode == k).FirstOrDefault();
 
                 txtFullName.Text = sv.FullName;
                 dateNgaySinh.Value = sv.DateOfBirth;

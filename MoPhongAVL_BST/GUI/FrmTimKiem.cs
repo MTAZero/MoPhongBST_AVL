@@ -14,6 +14,7 @@ namespace MoPhongAVL_BST.GUI
 {
     public partial class FrmTimKiem : Form
     {
+        private int Type = (Data.isBST) ? Data.BST.Type : Data.AVL.Type;
         public FrmTimKiem()
         {
             Helper.tempSinhVien = new Student();
@@ -29,9 +30,9 @@ namespace MoPhongAVL_BST.GUI
                 return false;
             }
 
-            if (Data.BST.Type == 2) return true;
+            if (Type == 2) return true;
 
-            if (Data.BST.Type == 3)
+            if (Type == 3)
             {
                 try
                 {
@@ -45,7 +46,7 @@ namespace MoPhongAVL_BST.GUI
                 return true;
             }
 
-            if (Data.BST.Type == 4)
+            if (Type == 4)
             {
                 /// điểm trung bình chung
                 try
@@ -60,7 +61,7 @@ namespace MoPhongAVL_BST.GUI
                 return true;
             }
 
-            if (Data.BST.Type == 5)
+            if (Type == 5)
             {
                 try
                 {

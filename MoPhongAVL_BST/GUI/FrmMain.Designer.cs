@@ -42,14 +42,14 @@
             this.btnTimNode = new System.Windows.Forms.Button();
             this.btnThemNode = new System.Windows.Forms.Button();
             this.groupType = new System.Windows.Forms.GroupBox();
-            this.rdTinChi = new System.Windows.Forms.RadioButton();
-            this.rdDTB = new System.Windows.Forms.RadioButton();
-            this.rdNgaySinh = new System.Windows.Forms.RadioButton();
-            this.rdHoTen = new System.Windows.Forms.RadioButton();
             this.groupLoaiCay = new System.Windows.Forms.GroupBox();
             this.rdAVL = new System.Windows.Forms.RadioButton();
             this.rdBST = new System.Windows.Forms.RadioButton();
             this.Timer = new System.Windows.Forms.Timer(this.components);
+            this.rdHoTen = new System.Windows.Forms.RadioButton();
+            this.rdDTB = new System.Windows.Forms.RadioButton();
+            this.rdNgaySinh = new System.Windows.Forms.RadioButton();
+            this.rdTinChi = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -220,48 +220,6 @@
             this.groupType.TabStop = false;
             this.groupType.Text = "Thao tác với trường";
             // 
-            // rdTinChi
-            // 
-            this.rdTinChi.AutoSize = true;
-            this.rdTinChi.Location = new System.Drawing.Point(21, 125);
-            this.rdTinChi.Name = "rdTinChi";
-            this.rdTinChi.Size = new System.Drawing.Size(112, 21);
-            this.rdTinChi.TabIndex = 3;
-            this.rdTinChi.Text = "Tín chỉ tích lũy";
-            this.rdTinChi.UseVisualStyleBackColor = true;
-            // 
-            // rdDTB
-            // 
-            this.rdDTB.AutoSize = true;
-            this.rdDTB.Location = new System.Drawing.Point(21, 91);
-            this.rdDTB.Name = "rdDTB";
-            this.rdDTB.Size = new System.Drawing.Size(120, 21);
-            this.rdDTB.TabIndex = 2;
-            this.rdDTB.Text = "Điểm trung bình";
-            this.rdDTB.UseVisualStyleBackColor = true;
-            // 
-            // rdNgaySinh
-            // 
-            this.rdNgaySinh.AutoSize = true;
-            this.rdNgaySinh.Location = new System.Drawing.Point(21, 57);
-            this.rdNgaySinh.Name = "rdNgaySinh";
-            this.rdNgaySinh.Size = new System.Drawing.Size(85, 21);
-            this.rdNgaySinh.TabIndex = 1;
-            this.rdNgaySinh.Text = "Ngày sinh";
-            this.rdNgaySinh.UseVisualStyleBackColor = true;
-            // 
-            // rdHoTen
-            // 
-            this.rdHoTen.AutoSize = true;
-            this.rdHoTen.Checked = true;
-            this.rdHoTen.Location = new System.Drawing.Point(21, 23);
-            this.rdHoTen.Name = "rdHoTen";
-            this.rdHoTen.Size = new System.Drawing.Size(84, 21);
-            this.rdHoTen.TabIndex = 0;
-            this.rdHoTen.TabStop = true;
-            this.rdHoTen.Text = "Họ và tên";
-            this.rdHoTen.UseVisualStyleBackColor = true;
-            // 
             // groupLoaiCay
             // 
             this.groupLoaiCay.Controls.Add(this.rdAVL);
@@ -304,6 +262,52 @@
             this.Timer.Interval = 750;
             this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
+            // rdHoTen
+            // 
+            this.rdHoTen.AutoSize = true;
+            this.rdHoTen.Checked = true;
+            this.rdHoTen.Location = new System.Drawing.Point(21, 23);
+            this.rdHoTen.Name = "rdHoTen";
+            this.rdHoTen.Size = new System.Drawing.Size(84, 21);
+            this.rdHoTen.TabIndex = 0;
+            this.rdHoTen.TabStop = true;
+            this.rdHoTen.Text = "Họ và tên";
+            this.rdHoTen.UseVisualStyleBackColor = true;
+            this.rdHoTen.CheckedChanged += new System.EventHandler(this.rdNgaySinh_CheckedChanged);
+            // 
+            // rdDTB
+            // 
+            this.rdDTB.AutoSize = true;
+            this.rdDTB.Location = new System.Drawing.Point(21, 91);
+            this.rdDTB.Name = "rdDTB";
+            this.rdDTB.Size = new System.Drawing.Size(120, 21);
+            this.rdDTB.TabIndex = 2;
+            this.rdDTB.Text = "Điểm trung bình";
+            this.rdDTB.UseVisualStyleBackColor = true;
+            this.rdDTB.CheckedChanged += new System.EventHandler(this.rdNgaySinh_CheckedChanged);
+            // 
+            // rdNgaySinh
+            // 
+            this.rdNgaySinh.AutoSize = true;
+            this.rdNgaySinh.Location = new System.Drawing.Point(21, 57);
+            this.rdNgaySinh.Name = "rdNgaySinh";
+            this.rdNgaySinh.Size = new System.Drawing.Size(85, 21);
+            this.rdNgaySinh.TabIndex = 1;
+            this.rdNgaySinh.Text = "Ngày sinh";
+            this.rdNgaySinh.UseVisualStyleBackColor = true;
+            this.rdNgaySinh.CheckedChanged += new System.EventHandler(this.rdNgaySinh_CheckedChanged);
+            // 
+            // rdTinChi
+            // 
+            this.rdTinChi.AutoSize = true;
+            this.rdTinChi.Location = new System.Drawing.Point(21, 125);
+            this.rdTinChi.Name = "rdTinChi";
+            this.rdTinChi.Size = new System.Drawing.Size(112, 21);
+            this.rdTinChi.TabIndex = 3;
+            this.rdTinChi.Text = "Tín chỉ tích lũy";
+            this.rdTinChi.UseVisualStyleBackColor = true;
+            this.rdTinChi.CheckedChanged += new System.EventHandler(this.rdNgaySinh_CheckedChanged);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -337,10 +341,6 @@
         private System.Windows.Forms.Button btnCapNhatThongTin;
         private System.Windows.Forms.Button btnTimNode;
         private System.Windows.Forms.Button btnThemNode;
-        private System.Windows.Forms.RadioButton rdTinChi;
-        private System.Windows.Forms.RadioButton rdDTB;
-        private System.Windows.Forms.RadioButton rdNgaySinh;
-        private System.Windows.Forms.RadioButton rdHoTen;
         private System.Windows.Forms.RadioButton rdAVL;
         private System.Windows.Forms.RadioButton rdBST;
         private System.Windows.Forms.Button btnDuyetCay;
@@ -350,5 +350,9 @@
         private System.Windows.Forms.Panel panelDraw;
         private System.Windows.Forms.Timer Timer;
         private System.Windows.Forms.Button btnSkip;
+        private System.Windows.Forms.RadioButton rdTinChi;
+        private System.Windows.Forms.RadioButton rdDTB;
+        private System.Windows.Forms.RadioButton rdNgaySinh;
+        private System.Windows.Forms.RadioButton rdHoTen;
     }
 }

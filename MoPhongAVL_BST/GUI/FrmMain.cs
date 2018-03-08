@@ -30,11 +30,6 @@ namespace MoPhongAVL_BST.GUI
         #endregion
 
         #region LoadForm
-        private void BieuDienCay()
-        {
-
-        }
-
         private void FrmMain_Load(object sender, EventArgs e)
         {
         }
@@ -79,7 +74,7 @@ namespace MoPhongAVL_BST.GUI
             if (Helper.tempSinhVien.StudentCode != 0)
             {
                 List<Graph> list;
-                if (isBST)
+                if (Data.isBST)
                     list = BST.Insert(Helper.tempSinhVien);
                 else
                     list = AVL.Insert(Helper.tempSinhVien);
@@ -111,7 +106,7 @@ namespace MoPhongAVL_BST.GUI
             if (Helper.tempSinhVien.StudentCode != 0)
             {
                 List<Graph> list;
-                if (isBST)
+                if (Data.isBST)
                     list = BST.Search(Helper.tempSinhVien);
                 else
                     list = AVL.Search(Helper.tempSinhVien);
@@ -127,7 +122,7 @@ namespace MoPhongAVL_BST.GUI
             if (Helper.tempSinhVien.StudentCode != 0)
             {
                 List<Graph> list;
-                if (isBST)
+                if (Data.isBST)
                     list = BST.Update(Helper.tempSinhVien);
                 else
                     list = AVL.Update(Helper.tempSinhVien);
@@ -143,7 +138,7 @@ namespace MoPhongAVL_BST.GUI
             if (Helper.tempSinhVien.StudentCode != 0)
             {
                 List<Graph> list;
-                if (isBST)
+                if (Data.isBST)
                     list = BST.Delete(Helper.tempSinhVien);
                 else
                     list = AVL.Delete(Helper.tempSinhVien);
@@ -154,7 +149,7 @@ namespace MoPhongAVL_BST.GUI
         private void btnDuyetCay_Click(object sender, EventArgs e)
         {
             List<Graph> gr;
-            if (isBST)
+            if (Data.isBST)
                 gr = BST.LNR();
             else
                 gr = AVL.LNR();
@@ -164,7 +159,7 @@ namespace MoPhongAVL_BST.GUI
         private void btnXoaCay_Click(object sender, EventArgs e)
         {
             List<Graph> ans;
-            if (isBST)
+            if (Data.isBST)
                 ans = BST.Clear();
             else
                 ans = AVL.Clear();
@@ -200,9 +195,66 @@ namespace MoPhongAVL_BST.GUI
         private void rdAVL_CheckedChanged(object sender, EventArgs e)
         {
             if (rdBST.Checked)
-                isBST = true;
+                Data.isBST = true;
             else
-                isBST = false;
+                Data.isBST = false;
+
+            List<Graph> list = new List<Graph>();
+            if (Data.isBST)
+            {
+                switch (Data.BST.Type)
+                {
+                    case 2: rdHoTen.Checked = true; break;
+                    case 3: rdNgaySinh.Checked = true; break;
+                    case 4: rdDTB.Checked = true; break;
+                    case 5: rdTinChi.Checked = true; break;
+                }
+                list.Add(Data.BST.display());
+            }
+            else
+            {
+                switch (Data.AVL.Type)
+                {
+                    case 2: rdHoTen.Checked = true; break;
+                    case 3: rdNgaySinh.Checked = true; break;
+                    case 4: rdDTB.Checked = true; break;
+                    case 5: rdTinChi.Checked = true; break;
+                }
+                list.Add(Data.AVL.display());
+            }
+            display(list);
+        }
+
+        private void rdNgaySinh_CheckedChanged(object sender, EventArgs e)
+        {
+            int Type = 0;
+            if (rdHoTen.Checked) Type = 2;
+            if (rdNgaySinh.Checked) Type = 3;
+            if (rdDTB.Checked) Type = 4;
+            if (rdTinChi.Checked) Type = 5;
+
+            if (Data.isBST)
+            {
+                Data.BST.Type = Type;
+                List<Student> data = Data.BST.getListStudent();
+                Data.BST.Clear();
+                foreach (var item in data) Data.BST.Insert(item);
+            }
+            else
+            {
+                Data.AVL.Type = Type;
+                List<Student> data = Data.AVL.getListStudent();
+                Data.AVL.Clear();
+                foreach (var item in data) Data.AVL.Insert(item);
+            }
+
+            List<Graph> list = new List<Graph>();
+            if (Data.isBST)
+                list.Add(Data.BST.display());
+            else
+                list.Add(Data.AVL.display());
+
+            display(list);
         }
     }
 }

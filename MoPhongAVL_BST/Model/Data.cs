@@ -38,8 +38,8 @@ namespace MoPhongAVL_BST.Model
             }
             else
             {
-                List<Student> zz = BST.getListStudent();
-                foreach (var item in zz) if (item.StudentCode == z) return false
+                List<Student> zz = AVL.getListStudent();
+                foreach (var item in zz) if (item.StudentCode == z) return false;
             }
 
             return true;
