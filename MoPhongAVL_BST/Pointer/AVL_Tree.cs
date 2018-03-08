@@ -142,7 +142,8 @@ namespace MoPhongAVL_BST.Pointer
 
                     if (Parent != null && Parent.LeftChild == root)
                         Parent.LeftChild = null;
-                    else
+                    
+                    if (Parent!=null && Parent.RightChild == root)
                         Parent.RightChild = null;
 
                     if (root == Root) Root = null;
@@ -193,6 +194,7 @@ namespace MoPhongAVL_BST.Pointer
                     if (maxLeft.LeftChild != null)
                         maxLeft.LeftChild.Parent = _ParentMaxLeft;
                 }
+                
 
                 if (_Parent != null && root == _Parent.LeftChild)
                     _Parent.LeftChild = maxLeft;

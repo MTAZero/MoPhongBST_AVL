@@ -9,20 +9,38 @@ namespace MoPhongAVL_BST.Model
 {
     public static class Data
     {
-        public static AVL_Tree BST = new AVL_Tree() { MaxWidth = 1000, Type = 2 };
+        public static BST_Tree BST = new BST_Tree() { MaxWidth = 1000, Type = 2 };
+        public static AVL_Tree AVL = new AVL_Tree() { MaxWidth = 1000, Type = 2 };
+        public static bool isBST = true;
         
         public static bool CodeIsOk(Student z)
         {
-            List<Student> zz = BST.getListStudent();
-            foreach (var item in zz) if (item.StudentCode == z.StudentCode) return false;
+            if (isBST)
+            {
+                List<Student> zz = BST.getListStudent();
+                foreach (var item in zz) if (item.StudentCode == z.StudentCode) return false;
+            }
+            else
+            {
+                List<Student> zz = AVL.getListStudent();
+                foreach (var item in zz) if (item.StudentCode == z.StudentCode) return false;
+            }
 
             return true;
         }
 
         public static bool CodeIsOk(int z)
         {
-            List<Student> zz = BST.getListStudent();
-            foreach (var item in zz) if (item.StudentCode == z) return false;
+            if (isBST)
+            {
+                List<Student> zz = BST.getListStudent();
+                foreach (var item in zz) if (item.StudentCode == z) return false;
+            }
+            else
+            {
+                List<Student> zz = BST.getListStudent();
+                foreach (var item in zz) if (item.StudentCode == z) return false
+            }
 
             return true;
         }

@@ -283,6 +283,7 @@
             this.rdAVL.TabIndex = 1;
             this.rdAVL.Text = "AVL Tree";
             this.rdAVL.UseVisualStyleBackColor = true;
+            this.rdAVL.CheckedChanged += new System.EventHandler(this.rdAVL_CheckedChanged);
             // 
             // rdBST
             // 
@@ -296,6 +297,7 @@
             this.rdBST.TabStop = true;
             this.rdBST.Text = "BST Tree";
             this.rdBST.UseVisualStyleBackColor = true;
+            this.rdBST.CheckedChanged += new System.EventHandler(this.rdAVL_CheckedChanged);
             // 
             // Timer
             // 

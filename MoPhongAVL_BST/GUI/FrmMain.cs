@@ -15,10 +15,11 @@ namespace MoPhongAVL_BST.GUI
 {
     public partial class FrmMain : Form
     {
-        private AVL_Tree BST = Data.BST;
+        private BST_Tree BST = Data.BST;
+        private AVL_Tree AVL = Data.AVL;
         private List<Graph> graphDisplay = new List<Graph>();
         private int IndexGraphDisplay = 0;
-        private int cnt = 0;
+        private bool isBST = Data.isBST;
 
         #region Hàm khởi tạo
         public FrmMain()
@@ -77,7 +78,11 @@ namespace MoPhongAVL_BST.GUI
 
             if (Helper.tempSinhVien.StudentCode != 0)
             {
-                List<Graph> list = BST.Insert(Helper.tempSinhVien);
+                List<Graph> list;
+                if (isBST)
+                    list = BST.Insert(Helper.tempSinhVien);
+                else
+                    list = AVL.Insert(Helper.tempSinhVien);
                 display(list);
             }
         }
@@ -105,7 +110,11 @@ namespace MoPhongAVL_BST.GUI
 
             if (Helper.tempSinhVien.StudentCode != 0)
             {
-                List<Graph> list = BST.Search(Helper.tempSinhVien);
+                List<Graph> list;
+                if (isBST)
+                    list = BST.Search(Helper.tempSinhVien);
+                else
+                    list = AVL.Search(Helper.tempSinhVien);
                 display(list);
             }
         }
@@ -117,7 +126,11 @@ namespace MoPhongAVL_BST.GUI
 
             if (Helper.tempSinhVien.StudentCode != 0)
             {
-                List<Graph> list = BST.Update(Helper.tempSinhVien);
+                List<Graph> list;
+                if (isBST)
+                    list = BST.Update(Helper.tempSinhVien);
+                else
+                    list = AVL.Update(Helper.tempSinhVien);
                 display(list);
             }
         }
@@ -129,20 +142,32 @@ namespace MoPhongAVL_BST.GUI
 
             if (Helper.tempSinhVien.StudentCode != 0)
             {
-                List<Graph> list = BST.Delete(Helper.tempSinhVien);
+                List<Graph> list;
+                if (isBST)
+                    list = BST.Delete(Helper.tempSinhVien);
+                else
+                    list = AVL.Delete(Helper.tempSinhVien);
                 display(list);
             }
         }
 
         private void btnDuyetCay_Click(object sender, EventArgs e)
         {
-            List<Graph> gr = BST.LNR();
+            List<Graph> gr;
+            if (isBST)
+                gr = BST.LNR();
+            else
+                gr = AVL.LNR();
             display(gr);
         }
 
         private void btnXoaCay_Click(object sender, EventArgs e)
         {
-            List<Graph> ans = BST.Clear();
+            List<Graph> ans;
+            if (isBST)
+                ans = BST.Clear();
+            else
+                ans = AVL.Clear();
             panelDraw.Controls.Clear();
         }
         #endregion
@@ -169,8 +194,15 @@ namespace MoPhongAVL_BST.GUI
 
             IndexGraphDisplay++;
         }
+
         #endregion
 
-        
+        private void rdAVL_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdBST.Checked)
+                isBST = true;
+            else
+                isBST = false;
+        }
     }
 }
