@@ -63,7 +63,8 @@ namespace MoPhongAVL_BST.Pointer
 
             /// thêm đồ thị của node hiện tại :3
             Graph z = display();
-            foreach (var ht in z.listCircle) if (ht.Code == root.Info.StudentCode)
+            foreach (var ht in z.listCircle)
+                if (ht.Code == root.Info.StudentCode)
                     ht.Color = System.Drawing.Color.Red;
             if (root.Parent != null)
             {
@@ -85,27 +86,28 @@ namespace MoPhongAVL_BST.Pointer
 
             // thêm đồ thị sau khi thêm
             Graph z1 = display();
-            foreach (var ht in z1.listCircle) if (ht.Code == root.Info.StudentCode)
+            foreach (var ht in z1.listCircle)
+                if (ht.Code == root.Info.StudentCode)
                     ht.Color = System.Drawing.Color.Red;
             tempGraph.Add(z1);
 
             root.Height = Math.Max(Hei(root.LeftChild), Hei(root.RightChild)) + 1;
-            int balance = getBalance(root);
+            //int balance = getBalance(root);
 
-            if (balance > 1 && root.LeftChild.Info.Compare(addNode.Info, Type)) return RightRotate(root);
-            if (balance < -1 && !root.RightChild.Info.Compare(addNode.Info, Type)) return LeftRotate(root);
-            if (balance > 1 && !root.LeftChild.Info.Compare(addNode.Info, Type))
-            {
-                root.LeftChild = LeftRotate(root.LeftChild);
-                return RightRotate(root);
-            }
-            if (balance < -1 && root.RightChild.Info.Compare(addNode.Info, Type))
-            {
-                root.RightChild = RightRotate(root.RightChild);
-                return LeftRotate(root);
-            }
+            //if (balance > 1 && root.LeftChild.Info.Compare(addNode.Info, Type)) return RightRotate(root);
+            //if (balance < -1 && !root.RightChild.Info.Compare(addNode.Info, Type)) return LeftRotate(root);
+            //if (balance > 1 && !root.LeftChild.Info.Compare(addNode.Info, Type))
+            //{
+            //    root.LeftChild = LeftRotate(root.LeftChild);
+            //    return RightRotate(root);
+            //}
+            //if (balance < -1 && root.RightChild.Info.Compare(addNode.Info, Type))
+            //{
+            //    root.RightChild = RightRotate(root.RightChild);
+            //    return LeftRotate(root);
+            //}
 
-            return root;
+            return BalanceNode(root);
         }
 
         #endregion
@@ -142,8 +144,8 @@ namespace MoPhongAVL_BST.Pointer
 
                     if (Parent != null && Parent.LeftChild == root)
                         Parent.LeftChild = null;
-                    
-                    if (Parent!=null && Parent.RightChild == root)
+
+                    if (Parent != null && Parent.RightChild == root)
                         Parent.RightChild = null;
 
                     if (root == Root) Root = null;
@@ -171,9 +173,9 @@ namespace MoPhongAVL_BST.Pointer
                     if (Parent != null && Parent.RightChild == root)
                         Parent.RightChild = child;
 
+                    root = BalanceNode(root);
                     if (root == Root)
                         Root = child;
-
 
                     Graph zz = display();
                     ans.Add(zz);
@@ -194,7 +196,7 @@ namespace MoPhongAVL_BST.Pointer
                     if (maxLeft.LeftChild != null)
                         maxLeft.LeftChild.Parent = _ParentMaxLeft;
                 }
-                
+
 
                 if (_Parent != null && root == _Parent.LeftChild)
                     _Parent.LeftChild = maxLeft;
@@ -203,26 +205,40 @@ namespace MoPhongAVL_BST.Pointer
 
                 maxLeft.Parent = _Parent;
                 maxLeft.RightChild = root.RightChild;
-                if (maxLeft!=root.LeftChild) maxLeft.LeftChild = root.LeftChild;
+                if (maxLeft != root.LeftChild) maxLeft.LeftChild = root.LeftChild;
                 if (maxLeft.RightChild != null) maxLeft.RightChild.Parent = maxLeft;
 
+                root = BalanceNode(root);
                 if (root == Root) Root = maxLeft;
 
                 Graph zz1 = display();
                 ans.Add(zz1);
                 return ans;
-
-
             }
 
             if (root.LeftChild != null && root.Info.Compare(a, Type))
             {
                 ans.AddRange(getDelete(root.LeftChild, a));
+                if (Root == root)
+                    Root = BalanceNode(root);
+                else
+                    BalanceNode(root);
+
+                Graph zz1 = display();
+                ans.Add(zz1);
                 return ans;
             }
             else
             {
                 ans.AddRange(getDelete(root.RightChild, a));
+
+                if (Root == root)
+                    Root = BalanceNode(root);
+                else
+                    BalanceNode(root);
+
+                Graph zz1 = display();
+                ans.Add(zz1);
                 return ans;
             }
 
@@ -629,7 +645,39 @@ namespace MoPhongAVL_BST.Pointer
         // Tính hệ số cân bằng
         private int getBalance(Node root)
         {
+            if (root == null) return 0;
             return Hei(root.LeftChild) - Hei(root.RightChild);
+        }
+
+        private Node BalanceNode(Node root)
+        {
+            int balance = getBalance(root);
+
+            if (balance > 1)
+            {
+                var leftBalance = getBalance(root.LeftChild);
+                if (leftBalance > -1)
+                    return RightRotate(root);
+                else
+                {
+                    root.LeftChild = LeftRotate(root.LeftChild);
+                    return RightRotate(root);
+                }
+            }
+
+            if (balance < -1)
+            {
+                var rightBalance = getBalance(root.RightChild);
+                if (rightBalance < -1)
+                    return LeftRotate(root);
+                else
+                {
+                    root.RightChild = RightRotate(root.RightChild);
+                    return LeftRotate(root);
+                }
+            }
+
+            return root;
         }
 
         // hei: hàm tính height tổng quát cho cả node null
